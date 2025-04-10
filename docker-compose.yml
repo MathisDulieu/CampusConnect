@@ -63,19 +63,20 @@ services:
       - school_network
     restart: always
 
-#  classroom-service:
-#    build: ./classroom-service
-#    container_name: classroom-service
-#    ports:
-#      - "8083:8083"
-#    environment:
-#      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
-#      - DATABASE_NAME=CampusConnect
-#    depends_on:
-#      - mongodb
-#    networks:
-#      - school_network
-#    restart: always
+  classroom-service:
+    build: ./classroom-service
+    container_name: classroom-service
+    ports:
+      - "8083:8083"
+    environment:
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+      - DATABASE_NAME=CampusConnect
+      - JWT_SECRET=YRMCKrygcXtx1bVpEMcBKIK9LxX8aDUTUQy2XyuLRCbnoPOhxUeIPqIQW01UfC6QgEKETKf2rM9UQnc4FkRSxA
+    depends_on:
+      - mongodb
+    networks:
+      - school_network
+    restart: always
 
 #  grade-service:
 #    build: ./grade-service

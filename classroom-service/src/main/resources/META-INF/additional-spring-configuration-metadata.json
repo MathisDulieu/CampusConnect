@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "campus.connect.properties.database-name",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.database-name."
+    },
+    {
+      "name": "campus.connect.properties.jwt-secret",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.jwt-secret."
+    },
+    {
+      "name": "campus.connect.properties.mongo-uri",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.mongo-uri."
+    }
+  ]
+}

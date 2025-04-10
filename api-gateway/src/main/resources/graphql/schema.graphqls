@@ -1,5 +1,9 @@
 type Query {
     me: User
+    classes: [Classroom]
+    classesSorted(order: String): [Classroom]
+    classById(id: ID!): Classroom
+    studentsInClass(classId: ID!): [User]
 }
 
 type Mutation {
@@ -7,6 +11,12 @@ type Mutation {
     register(email: String!, username: String!, password: String!, role: String!): String
     updateUser(username: String, email: String, oldPassword: String, newPassword: String): String
     deleteUser: String
+
+    createClass(name: String!, description: String, courseIds: [ID]): String
+    updateClass(id: ID!, name: String, description: String, courseIds: [ID]): String
+    deleteClass(id: ID!): String
+    addStudentToClass(classId: ID!, studentId: ID!): String
+    removeStudentFromClass(classId: ID!, studentId: ID!): String
 }
 
 type User {
@@ -23,18 +33,19 @@ enum Role {
     ADMIN
 }
 
-type Class {
+type Classroom {
     id: ID!
     name: String!
     description: String
-    students: [User]
-    professor: User
+    professorId: ID
+    studentIds: [ID]
+    courseIds: [ID]
 }
 
 input ClassInput {
     name: String!
     description: String
-    studentIds: [ID!]
+    courseIds: [ID]
 }
 
 input SortInput {
@@ -43,6 +54,7 @@ input SortInput {
 }
 
 enum SortOrder {
-    ASC
-    DESC
+    ASCENDING
+    DESCENDING
+    UNSORTED
 }
