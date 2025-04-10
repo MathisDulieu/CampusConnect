@@ -1,4 +1,4 @@
-package com.campus.connect.authentication_service.config;
+package com.campus.connect.user_service.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

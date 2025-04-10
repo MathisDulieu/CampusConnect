@@ -1,4 +1,4 @@
-package com.campus.connect.api_gateway.model.request;
+package com.campus.connect.api_gateway.model.request.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequest {
-    private String email;
-    private String password;
+public class GetAuthenticatedUserRequest {
+    private String token;
 }

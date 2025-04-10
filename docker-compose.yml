@@ -33,19 +33,20 @@ services:
       - school_network
     restart: always
 
-#  user-service:
-#    build: ./user-service
-#    container_name: user-service
-#    ports:
-#      - "8081:8081"
-#    environment:
-#      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
-#      - DATABASE_NAME=CampusConnect
-#    depends_on:
-#      - mongodb
-#    networks:
-#      - school_network
-#    restart: always
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+      - DATABASE_NAME=CampusConnect
+      - JWT_SECRET=YRMCKrygcXtx1bVpEMcBKIK9LxX8aDUTUQy2XyuLRCbnoPOhxUeIPqIQW01UfC6QgEKETKf2rM9UQnc4FkRSxA
+    depends_on:
+      - mongodb
+    networks:
+      - school_network
+    restart: always
 
   authentication-service:
     build: ./authentication-service

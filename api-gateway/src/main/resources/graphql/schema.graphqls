@@ -1,18 +1,19 @@
 type Query {
-    me(token: String!): User
-    classes(token: String!, sort: SortInput): [Class]
-    professorClasses(token: String!): [Class]
+    me: User
 }
 
 type Mutation {
     login(email: String!, password: String!): String
-    createClass(token: String!, input: ClassInput!): Class
+    register(email: String!, username: String!, password: String!, role: String!): String
+    updateUser(username: String, email: String, oldPassword: String, newPassword: String): String
+    deleteUser: String
 }
 
 type User {
     id: ID!
     email: String!
-    pseudo: String!
+    username: String!
+    password: String
     role: Role!
 }
 

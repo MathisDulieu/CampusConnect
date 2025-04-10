@@ -1,6 +1,6 @@
-package com.campus.connect.api_gateway.services;
+package com.campus.connect.user_service.service;
 
-import com.campus.connect.api_gateway.config.EnvConfiguration;
+import com.campus.connect.user_service.config.EnvConfiguration;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;

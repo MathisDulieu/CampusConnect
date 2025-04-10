@@ -1,4 +1,4 @@
-package com.campus.connect.api_gateway.model;
+package com.campus.connect.user_service.model;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +15,6 @@ public class User {
     private String email;
     private String username;
     private UserRole role;
+    private String password;
 
 }

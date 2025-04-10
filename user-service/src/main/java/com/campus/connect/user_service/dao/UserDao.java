@@ -1,6 +1,6 @@
-package com.campus.connect.authentication_service.dao;
+package com.campus.connect.user_service.dao;
 
-import com.campus.connect.authentication_service.model.User;
+import com.campus.connect.user_service.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -17,8 +17,8 @@ public class UserDao {
 
     private static final String USER_COLLECTION = "USERS";
 
-    public Optional<User> findByEmail(String email) {
-        return Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where("email").is(email)), User.class, USER_COLLECTION));
+    public Optional<User> findById(String userId) {
+        return Optional.ofNullable(mongoTemplate.findById(userId, User.class, USER_COLLECTION));
     }
 
     public void save(User user) {
@@ -33,8 +33,8 @@ public class UserDao {
         return mongoTemplate.exists(new Query(Criteria.where("email").is(email)), USER_COLLECTION);
     }
 
-    public Optional<User> findById(String userId) {
-        return Optional.ofNullable(mongoTemplate.findById(userId, User.class, USER_COLLECTION));
+    public void delete(String userId) {
+        mongoTemplate.remove(new Query(Criteria.where("_id").is(userId)), USER_COLLECTION);
     }
 
 }

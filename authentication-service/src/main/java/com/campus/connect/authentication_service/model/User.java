@@ -13,6 +13,8 @@ public class User {
     @Id
     private String id;
     private String email;
-    private String pseudo;
+    private String username;
     private UserRole role;
+    private String password;
+
 }
