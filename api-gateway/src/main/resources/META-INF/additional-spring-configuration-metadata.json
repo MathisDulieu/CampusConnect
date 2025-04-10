@@ -14,6 +14,26 @@
       "name": "campus.connect.properties.mongo-uri",
       "type": "java.lang.String",
       "description": "Description for campus.connect.properties.mongo-uri."
+    },
+    {
+      "name": "campus.connect.properties.user-service-url",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.user-service-url."
+    },
+    {
+      "name": "campus.connect.properties.auth-service-url",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.auth-service-url."
+    },
+    {
+      "name": "campus.connect.properties.classroom-service-url",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.classroom-service-url."
+    },
+    {
+      "name": "campus.connect.properties.grade-service-url",
+      "type": "java.lang.String",
+      "description": "Description for campus.connect.properties.grade-service-url."
     }
   ]
 }

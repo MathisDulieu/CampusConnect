@@ -42,7 +42,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .post()
-                .uri("http://user-service:8081/private/user/me")
+                .uri(envConfiguration.getUserServiceUrl() + "/private/user/me")
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(User.class)
@@ -53,7 +53,7 @@ public class GraphQLController {
     public String login(@Argument String email, @Argument String password) {
         return webClientBuilder.build()
                 .post()
-                .uri("http://authentication-service:8082/api/auth/login")
+                .uri(envConfiguration.getAuthServiceUrl() + "/api/auth/login")
                 .bodyValue(new LoginRequest(email, password))
                 .retrieve()
                 .bodyToMono(String.class)
@@ -64,7 +64,7 @@ public class GraphQLController {
     public String register(@Argument String email, @Argument String username, @Argument String password, @Argument String role) {
         return webClientBuilder.build()
                 .post()
-                .uri("http://authentication-service:8082/api/auth/register")
+                .uri(envConfiguration.getAuthServiceUrl() + "/api/auth/register")
                 .bodyValue(new RegisterRequest(email, username, password, role))
                 .retrieve()
                 .bodyToMono(String.class)
@@ -87,7 +87,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .put()
-                .uri("http://user-service:8081/private/user")
+                .uri(envConfiguration.getUserServiceUrl() + "/private/user")
                 .header("Authorization", authorizationHeader)
                 .bodyValue(new UpdateUserDetailsRequest(email, username, oldPassword, newPassword))
                 .retrieve()
@@ -105,7 +105,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .delete()
-                .uri("http://user-service:8081/private/user")
+                .uri(envConfiguration.getUserServiceUrl() + "/private/user")
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -116,7 +116,7 @@ public class GraphQLController {
     public List<Classroom> classes() {
         return webClientBuilder.build()
                 .get()
-                .uri("http://classroom-service:8083/api/classes")
+                .uri(envConfiguration.getClassroomServiceUrl() + "/api/classes")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Classroom>>() {})
                 .block();
@@ -142,7 +142,7 @@ public class GraphQLController {
     public Classroom classById(@Argument String id) {
         return webClientBuilder.build()
                 .get()
-                .uri("http://classroom-service:8083/api/classes/" + id)
+                .uri(envConfiguration.getClassroomServiceUrl() + "/api/classes/" + id)
                 .retrieve()
                 .bodyToMono(Classroom.class)
                 .block();
@@ -152,7 +152,7 @@ public class GraphQLController {
     public List<User> studentsInClass(@Argument String classId) {
         return webClientBuilder.build()
                 .get()
-                .uri("http://classroom-service:8083/api/classes/" + classId + "/students")
+                .uri(envConfiguration.getClassroomServiceUrl() + "/api/classes/" + classId + "/students")
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<User>>() {})
                 .block();
@@ -173,7 +173,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .post()
-                .uri("http://classroom-service:8083/private/classes")
+                .uri(envConfiguration.getClassroomServiceUrl() + "/private/classes")
                 .header("Authorization", authorizationHeader)
                 .bodyValue(new CreateClassRequest(name, description, courseIds))
                 .retrieve()
@@ -198,7 +198,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .put()
-                .uri("http://classroom-service:8083/private/classes/" + id)
+                .uri(envConfiguration.getClassroomServiceUrl() + "/private/classes/" + id)
                 .header("Authorization", authorizationHeader)
                 .bodyValue(new UpdateClassRequest(name, description, courseIds))
                 .retrieve()
@@ -220,7 +220,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .delete()
-                .uri("http://classroom-service:8083/private/classes/" + id)
+                .uri(envConfiguration.getClassroomServiceUrl() + "/private/classes/" + id)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -241,7 +241,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .post()
-                .uri("http://classroom-service:8083/private/classes/" + classId + "/students/" + studentId)
+                .uri(envConfiguration.getClassroomServiceUrl() + "/private/classes/" + classId + "/students/" + studentId)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -262,7 +262,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .delete()
-                .uri("http://classroom-service:8083/private/classes/" + classId + "/students/" + studentId)
+                .uri(envConfiguration.getClassroomServiceUrl() + "/private/classes/" + classId + "/students/" + studentId)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(String.class)
@@ -279,7 +279,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .get()
-                .uri("http://grade-service:8084/private/grades/my")
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades/my")
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
@@ -296,7 +296,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .get()
-                .uri("http://grade-service:8084/private/grades/my/course/" + courseId)
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades/my/course/" + courseId)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
@@ -313,7 +313,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .get()
-                .uri("http://grade-service:8084/private/grades/student/" + studentId)
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades/student/" + studentId)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
@@ -337,7 +337,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .post()
-                .uri("http://grade-service:8084/private/grades")
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades")
                 .header("Authorization", authorizationHeader)
                 .bodyValue(new CreateGradeRequest(studentId, courseId, gradeValue, comment, semester))
                 .retrieve()
@@ -361,7 +361,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .put()
-                .uri("http://grade-service:8084/private/grades/" + gradeId)
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades/" + gradeId)
                 .header("Authorization", authorizationHeader)
                 .bodyValue(new UpdateGradeRequest(gradeValue, comment, semester))
                 .retrieve()
@@ -382,7 +382,7 @@ public class GraphQLController {
 
         return webClientBuilder.build()
                 .delete()
-                .uri("http://grade-service:8084/private/grades/" + gradeId)
+                .uri(envConfiguration.getGradeServiceUrl() + "/private/grades/" + gradeId)
                 .header("Authorization", authorizationHeader)
                 .retrieve()
                 .bodyToMono(String.class)

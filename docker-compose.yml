@@ -23,10 +23,10 @@ services:
       - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
       - DATABASE_NAME=CampusConnect
       - JWT_SECRET=YRMCKrygcXtx1bVpEMcBKIK9LxX8aDUTUQy2XyuLRCbnoPOhxUeIPqIQW01UfC6QgEKETKf2rM9UQnc4FkRSxA
-      - USER_SERVICE_URL=http://localhost:8081
-      - AUTH_SERVICE_URL=http://localhost:8082
-      - CLASSROOM_SERVICE_URL=http://localhost:8083
-      - GRADE_SERVICE_URL=http://localhost:8084
+      - USER_SERVICE_URL=http://user-service:8081
+      - AUTH_SERVICE_URL=http://authentication-service:8082
+      - CLASSROOM_SERVICE_URL=http://classroom-service:8083
+      - GRADE_SERVICE_URL=http://grade-service:8084
     depends_on:
       - mongodb
     networks:

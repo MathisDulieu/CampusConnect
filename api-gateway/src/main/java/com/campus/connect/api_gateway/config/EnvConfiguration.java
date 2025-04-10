@@ -13,4 +13,8 @@ public class EnvConfiguration {
     private String databaseName;
     private String jwtSecret;
     private String mongoUri;
+    private String userServiceUrl;
+    private String authServiceUrl;
+    private String classroomServiceUrl;
+    private String gradeServiceUrl;
 }
