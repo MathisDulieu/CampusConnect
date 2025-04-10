@@ -4,6 +4,10 @@ type Query {
     classesSorted(order: String): [Classroom]
     classById(id: ID!): Classroom
     studentsInClass(classId: ID!): [User]
+
+    myGrades: [Grade]
+    myGradesForCourse(courseId: ID!): [Grade]
+    gradesForStudent(studentId: ID!): [Grade]
 }
 
 type Mutation {
@@ -17,6 +21,21 @@ type Mutation {
     deleteClass(id: ID!): String
     addStudentToClass(classId: ID!, studentId: ID!): String
     removeStudentFromClass(classId: ID!, studentId: ID!): String
+
+    createGrade(studentId: ID!, courseId: ID!, gradeValue: Float!, comment: String, semester: String!): String
+    updateGrade(gradeId: ID!, gradeValue: Float, comment: String, semester: String): String
+    deleteGrade(gradeId: ID!): String
+}
+
+type Grade {
+    id: ID!
+    studentId: ID!
+    courseId: ID!
+    gradeValue: Float!
+    comment: String
+    teacherId: ID!
+    semester: String!
+    timestamp: Float
 }
 
 type User {

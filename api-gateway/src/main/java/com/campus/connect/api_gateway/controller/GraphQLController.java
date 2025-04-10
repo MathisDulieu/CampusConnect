@@ -2,11 +2,14 @@ package com.campus.connect.api_gateway.controller;
 
 import com.campus.connect.api_gateway.config.EnvConfiguration;
 import com.campus.connect.api_gateway.model.Classroom;
+import com.campus.connect.api_gateway.model.Grade;
 import com.campus.connect.api_gateway.model.User;
 import com.campus.connect.api_gateway.model.request.AuthenticationService.LoginRequest;
 import com.campus.connect.api_gateway.model.request.AuthenticationService.RegisterRequest;
 import com.campus.connect.api_gateway.model.request.ClassroomService.CreateClassRequest;
 import com.campus.connect.api_gateway.model.request.ClassroomService.UpdateClassRequest;
+import com.campus.connect.api_gateway.model.request.GradeService.CreateGradeRequest;
+import com.campus.connect.api_gateway.model.request.GradeService.UpdateGradeRequest;
 import com.campus.connect.api_gateway.model.request.UserService.UpdateUserDetailsRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -265,4 +268,125 @@ public class GraphQLController {
                 .bodyToMono(String.class)
                 .block();
     }
+
+    @QueryMapping
+    public List<Grade> myGrades(@ContextValue HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .get()
+                .uri("http://grade-service:8084/private/grades/my")
+                .header("Authorization", authorizationHeader)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
+                .block();
+    }
+
+    @QueryMapping
+    public List<Grade> myGradesForCourse(@Argument String courseId, @ContextValue HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .get()
+                .uri("http://grade-service:8084/private/grades/my/course/" + courseId)
+                .header("Authorization", authorizationHeader)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
+                .block();
+    }
+
+    @QueryMapping
+    public List<Grade> gradesForStudent(@Argument String studentId, @ContextValue HttpServletRequest request) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .get()
+                .uri("http://grade-service:8084/private/grades/student/" + studentId)
+                .header("Authorization", authorizationHeader)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<Grade>>() {})
+                .block();
+    }
+
+    @MutationMapping
+    public String createGrade(
+            @Argument String studentId,
+            @Argument String courseId,
+            @Argument Double gradeValue,
+            @Argument String comment,
+            @Argument String semester,
+            @ContextValue HttpServletRequest request
+    ) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .post()
+                .uri("http://grade-service:8084/private/grades")
+                .header("Authorization", authorizationHeader)
+                .bodyValue(new CreateGradeRequest(studentId, courseId, gradeValue, comment, semester))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    @MutationMapping
+    public String updateGrade(
+            @Argument String gradeId,
+            @Argument Double gradeValue,
+            @Argument String comment,
+            @Argument String semester,
+            @ContextValue HttpServletRequest request
+    ) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .put()
+                .uri("http://grade-service:8084/private/grades/" + gradeId)
+                .header("Authorization", authorizationHeader)
+                .bodyValue(new UpdateGradeRequest(gradeValue, comment, semester))
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
+    @MutationMapping
+    public String deleteGrade(
+            @Argument String gradeId,
+            @ContextValue HttpServletRequest request
+    ) {
+        String authorizationHeader = request.getHeader("Authorization");
+
+        if (authorizationHeader == null) {
+            throw new RuntimeException("Authentication required");
+        }
+
+        return webClientBuilder.build()
+                .delete()
+                .uri("http://grade-service:8084/private/grades/" + gradeId)
+                .header("Authorization", authorizationHeader)
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+    }
+
 }
