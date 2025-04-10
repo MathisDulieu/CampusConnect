@@ -1,0 +1,47 @@
+type Query {
+    me(token: String!): User
+    classes(token: String!, sort: SortInput): [Class]
+    professorClasses(token: String!): [Class]
+}
+
+type Mutation {
+    login(email: String!, password: String!): String
+    createClass(token: String!, input: ClassInput!): Class
+}
+
+type User {
+    id: ID!
+    email: String!
+    pseudo: String!
+    role: Role!
+}
+
+enum Role {
+    STUDENT
+    PROFESSOR
+    ADMIN
+}
+
+type Class {
+    id: ID!
+    name: String!
+    description: String
+    students: [User]
+    professor: User
+}
+
+input ClassInput {
+    name: String!
+    description: String
+    studentIds: [ID!]
+}
+
+input SortInput {
+    field: String!
+    order: SortOrder!
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}

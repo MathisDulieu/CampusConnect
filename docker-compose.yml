@@ -1,0 +1,98 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: CampusConnect
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - school_network
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+      - DATABASE_NAME=CampusConnect
+      - JWT_SECRET=YRMCKrygcXtx1bVpEMcBKIK9LxX8aDUTUQy2XyuLRCbnoPOhxUeIPqIQW01UfC6QgEKETKf2rM9UQnc4FkRSxA
+      - USER_SERVICE_URL=http://localhost:8081
+      - AUTH_SERVICE_URL=http://localhost:8082
+      - CLASSROOM_SERVICE_URL=http://localhost:8083
+      - GRADE_SERVICE_URL=http://localhost:8084
+    depends_on:
+      - mongodb
+    networks:
+      - school_network
+    restart: always
+
+#  user-service:
+#    build: ./user-service
+#    container_name: user-service
+#    ports:
+#      - "8081:8081"
+#    environment:
+#      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+#      - DATABASE_NAME=CampusConnect
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - school_network
+#    restart: always
+
+  authentication-service:
+    build: ./authentication-service
+    container_name: authentication-service
+    ports:
+      - "8082:8082"
+    environment:
+      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+      - DATABASE_NAME=CampusConnect
+      - JWT_SECRET=YRMCKrygcXtx1bVpEMcBKIK9LxX8aDUTUQy2XyuLRCbnoPOhxUeIPqIQW01UfC6QgEKETKf2rM9UQnc4FkRSxA
+    depends_on:
+      - mongodb
+    networks:
+      - school_network
+    restart: always
+
+#  classroom-service:
+#    build: ./classroom-service
+#    container_name: classroom-service
+#    ports:
+#      - "8083:8083"
+#    environment:
+#      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+#      - DATABASE_NAME=CampusConnect
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - school_network
+#    restart: always
+
+#  grade-service:
+#    build: ./grade-service
+#    container_name: grade-service
+#    ports:
+#      - "8084:8084"
+#    environment:
+#      - MONGO_URI=mongodb://root:rootpassword@mongodb:27017/campusconnect?authSource=admin
+#      - DATABASE_NAME=CampusConnect
+#    depends_on:
+#      - mongodb
+#    networks:
+#      - school_network
+#    restart: always
+
+networks:
+  school_network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
