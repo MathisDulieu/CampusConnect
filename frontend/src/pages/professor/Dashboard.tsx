@@ -571,6 +571,11 @@ const ProfessorDashboard: React.FC = () => {
                                                 required
                                             >
                                                 <option value="">Select a course</option>
+                                                <option value="MATH101">MATH101 - Introduction to Calculus</option>
+                                                <option value="CS201">CS201 - Data Structures and Algorithms</option>
+                                                <option value="PHYS150">PHYS150 - Physics for Engineers</option>
+                                                <option value="BIO110">BIO110 - Fundamentals of Biology</option>
+                                                <option value="ECON202">ECON202 - Macroeconomics</option>
                                                 {classData?.classById?.courseIds?.map((courseId) => (
                                                     <option key={courseId} value={courseId}>
                                                         {courseId}

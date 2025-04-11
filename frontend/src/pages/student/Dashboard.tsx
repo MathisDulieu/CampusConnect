@@ -138,13 +138,11 @@ const StudentDashboard: React.FC = () => {
                                     onChange={(e) => setSelectedCourse(e.target.value)}
                                 >
                                     <option value="">Select a course</option>
-                                    {classesData?.classes && classesData.classes.flatMap(classroom =>
-                                        classroom.courseIds ? classroom.courseIds.map(courseId => (
-                                            <option key={courseId} value={courseId}>
-                                                {courseId}
-                                            </option>
-                                        )) : []
-                                    )}
+                                    <option value="MATH101">MATH101 - Introduction to Calculus</option>
+                                    <option value="CS201">CS201 - Data Structures and Algorithms</option>
+                                    <option value="PHYS150">PHYS150 - Physics for Engineers</option>
+                                    <option value="BIO110">BIO110 - Fundamentals of Biology</option>
+                                    <option value="ECON202">ECON202 - Macroeconomics</option>
                                 </select>
                             </div>
 

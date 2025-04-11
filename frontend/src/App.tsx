@@ -21,9 +21,9 @@ function App() {
     return (
         <AuthProvider>
             <Router>
-                <div className="flex flex-grow min-h-screen">
+                <div className="flex flex-col min-h-screen">
                     <Header/>
-                    <div className="flex-grow p-4">
+                    <main className="flex-grow">
                         <Routes>
                             <Route path="/home" element={<Home/>}/>
                             <Route path="/login" element={<Login/>}/>
@@ -42,9 +42,8 @@ function App() {
                             </Route>
 
                             <Route path="*" element={<NotFound/>}/>
-
                         </Routes>
-                    </div>
+                    </main>
                     <Footer/>
                 </div>
             </Router>
