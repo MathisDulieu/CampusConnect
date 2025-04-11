@@ -93,6 +93,30 @@ services:
       - school_network
     restart: always
 
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - api-gateway
+    networks:
+      - school_network
+    restart: always
+
+  nginx-lb:
+    build: ./nginx-lb
+    container_name: nginx-lb
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api-gateway
+    networks:
+      - school_network
+
 networks:
   school_network:
     driver: bridge
